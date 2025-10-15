@@ -1,9 +1,12 @@
+!sw-01.cisco 15/10 dia da aula
 !Entrar no modo exec privelegiado
 enable
-    clock set 20:20:00 10 october 2025
+    clock set 20:20:00 15 october 2025
     configure terminal
-        hostname SW-01
-        service password-encryption
+        hostname rt-01
+        service password-encryptaion
+        security passwords min-length 8
+        login block-for 120 attempts 2 within 60
         service timetamps log datetime msec
         logging buffered 4096
         no ip domain-lookup
@@ -28,22 +31,17 @@ enable
             transport input ssh 
             logging synchronous
             exit
-         !configurando  o SVI
-        ip default-gateway 192.168.1.254
-        interface vlan 1
-            description interface de SVI
-            ip address 192.168.1.250 255.255.255.0
-            no shutdown
-            exit
         !configuraçai do SSH
         ip domain-name senac.br 
         crypto key generate rsa general-keys modulus 1024
         ip ssh version 2
         ip ssh time-out 60
         ip ssh authentication-retries 2
-        and
+        !cpnfiguração interface LAN
+        interface gigabiteEthernet 0/0
+            description interface de gateway da LAN
+            ip adress
 
 
-        
     copy running-config startup-config
     
